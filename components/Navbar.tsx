@@ -37,6 +37,10 @@ export default async function Navbar() {
               Dashboard
             </Link>
 
+            <Link href="/profile" className="text-sm">
+              Profile
+            </Link>
+
             {role === "ADMIN" && (
               <Link href="/admin" className="text-sm">
                 Admin
