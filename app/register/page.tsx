@@ -1,8 +1,10 @@
 "use client";
-
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,10 +38,12 @@ export default function RegisterPage() {
       return;
     }
 
-    setMessage("Compte créé avec succès.");
+    setMessage("Compte créé avec succès. Redirection vers la connexion...");
     setName("");
     setEmail("");
     setPassword("");
+
+    router.push("/login");
   }
 
   return (
