@@ -1,6 +1,7 @@
 import { authOptions } from "@/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import LogoutButton from "@/components/LogoutButton";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -30,7 +31,9 @@ export default async function DashboardPage() {
           <p>
             <strong>ID :</strong> {session.user?.id}
           </p>
-        </div>
+          
+        </div>  
+        <LogoutButton />
       </div>
     </main>
   );
