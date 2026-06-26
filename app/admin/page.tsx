@@ -12,7 +12,7 @@ export default async function AdminPage() {
   }
 
   if (session.user?.role !== "ADMIN") {
-    redirect("/dashboard");
+    redirect("/unauthorized");
   }
 
   return (
