@@ -7,23 +7,39 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
 
-    const response = await fetch("api/register",{
+    setMessage("");
+    setIsLoading(true);
+
+    const response = await fetch("api/register", {
       method: "POST",
       headers: {
-        "Content-Type" : "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-      name,
-      email,
-      password,
+        name,
+        email,
+        password,
       }),
-    })
+    });
 
     const data = await response.json();
-    console.log("Réponse API :", data);
+    setIsLoading(false);
+
+    if (!response.ok) {
+      setMessage(data.message || "Erreur lors de l'inscription.");
+      return;
+    }
+
+    setMessage("Compte créé avec succès.");
+    setName("");
+    setEmail("");
+    setPassword("");
   }
 
   return (
@@ -33,6 +49,8 @@ export default function RegisterPage() {
         className="border rounded-xl p-6 w-full max-w-md space-y-4"
       >
         <h1 className="text-2xl font-bold">Créer un compte</h1>
+
+        {message && <p className="border rounded p-2 text-sm">{message}</p>}
 
         <div className="space-y-1">
           <label className="block font-medium">Nom</label>
@@ -69,9 +87,11 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className="w-full bg-black text-white rounded p-2"
+          disabled={isLoading}
+          className="w-full bg-black text-white rounded p-2 disabled:opacity-50" 
         >
-          S'inscrire
+          {isLoading ? "Création..." : "S'inscrire"}
+
         </button>
       </form>
     </main>
